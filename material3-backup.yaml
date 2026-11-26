@@ -1,0 +1,169 @@
+# Backup of the Material3 dashboard raw config — Home Assistant, 2026-11-26
+# Captured 1:44-1:47 PM EST via the raw configuration editor, read-only.
+# Saved to the ha-theme repo before rebuilding Material3 into "Home".
+#
+# CAVEAT: the very first render of the raw editor (1:44 PM) showed a
+# materially different config (top-level "card_mod:" + "sections:", Security
+# tile on binary_sensor.front_door_ding, heading "Material 3", Greenhouse
+# tiles on input_boolean.greenhouse_master_control and
+# switch.greenhouse_frost_heater). Every read after that (three consistent
+# reads through 1:47 PM, screenshot and field value agreeing) showed the
+# config below. Nothing was changed (Save stayed disabled, editor showed
+# "Saved" throughout), so the first render was most likely a stale/cached
+# version — but treat this backup as the verified-current config with that
+# caveat. If the live dashboard ever differs from this file, this file is
+# the restore point, not the first render.
+#
+# Note: the backed-up config still contains a "Predicted Temp" tile for
+# sensor.wifi_thermometer_greenhouse_predicted_temp (unavailable — its source
+# sensor does not exist) and camera cards with camera_view: live (the rebuild
+# switches them to auto and swaps the front door card to
+# camera.front_door_snapshot).
+
+title: Home
+views:
+  - title: Material 3 Home
+    type: sections
+    max_columns: 2
+    sections:
+      - type: grid
+        cards:
+          - type: horizontal-stack
+            cards:
+              - type: tile
+                entity: alarm_control_panel.bloomington_mode
+                name: Security
+                hide_state: true
+                card_mod:
+                  style: |
+                    ha-card {
+                      border-radius: 9999px; /* M3 Pill Shape */
+                      background: rgba(var(--rgb-primary-color), 0.15); /* Tinted Surface */
+                      border: none;
+                    }
+              - type: tile
+                entity: >-
+                  cover.smart_garage_door_24090408838301610702c4e7ae0ae280_garage
+                name: Garage
+                hide_state: true
+                card_mod:
+                  style: |
+                    ha-card {
+                      border-radius: 9999px;
+                      background: rgba(var(--rgb-accent-color), 0.15);
+                      border: none;
+                    }
+      - type: grid
+        cards:
+          - type: heading
+            heading: Greenhouse
+          - type: tile
+            entity: automation.greenhouse_brain
+            name: Master Control
+            icon: mdi:sprout
+            color: green
+            card_mod:
+              style: |
+                ha-card { border-radius: 28px; border: none; }
+          - type: tile
+            entity: automation.greenhouse_frost_heater_control
+            name: Frost Heater
+            icon: mdi:heating-coil
+            card_mod:
+              style: |
+                ha-card { border-radius: 28px; border: none; }
+          - type: tile
+            entity: sensor.wifi_thermometer_greenhouse_predicted_temp
+            name: Predicted Temp
+            card_mod:
+              style: |
+                ha-card { border-radius: 28px; border: none; }
+      - type: grid
+        cards:
+          - type: heading
+            heading_style: title
+            heading: Lighting
+          - type: tile
+            entity: light.standing_lamp_socket_1
+            icon: ""
+            vertical: false
+            features_position: bottom
+            card_mod:
+              style: |
+                ha-card { border-radius: 28px; border: none; }
+          - type: tile
+            entity: light.lamp_socket_1
+            icon: ""
+            vertical: false
+            features_position: bottom
+            card_mod:
+              style: |
+                ha-card { border-radius: 28px; border: none; }
+      - type: grid
+        cards:
+          - type: heading
+            heading: Maintenance
+          - type: tile
+            entity: vacuum.t2292
+            name: eufy AE C10
+            icon: mdi:robot-vacuum
+            features:
+              - type: vacuum-commands
+                commands:
+                  - start_pause
+                  - return_home
+            card_mod:
+              style: |
+                ha-card { border-radius: 28px; border: none; }
+          - type: tile
+            entity: sensor.robovac_battery
+            name: Battery
+            icon: mdi:battery
+            card_mod:
+              style: |
+                ha-card { border-radius: 28px; border: none; }
+      - type: grid
+        cards:
+          - type: heading
+            heading: Cameras
+          - show_state: false
+            show_name: false
+            camera_view: live
+            fit_mode: cover
+            type: picture-entity
+            entity: camera.front_door_live_view
+            name: Front Door
+            card_mod:
+              style: |
+                ha-card {
+                  border-radius: 28px;
+                  border: none;
+                  overflow: hidden; /* Keeps the camera feed inside the rounded corners */
+                }
+          - show_state: false
+            show_name: false
+            camera_view: live
+            fit_mode: cover
+            type: picture-entity
+            entity: camera.tapo_2_live_view
+            name: Garage
+            card_mod:
+              style: |
+                ha-card {
+                  border-radius: 28px;
+                  border: none;
+                  overflow: hidden;
+                }
+          - show_state: false
+            show_name: false
+            camera_view: live
+            fit_mode: cover
+            type: picture-entity
+            entity: camera.tapo_1_live_view
+            card_mod:
+              style: |
+                ha-card {
+                  border-radius: 28px;
+                  border: none;
+                  overflow: hidden;
+                }
