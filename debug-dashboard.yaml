@@ -1,0 +1,114 @@
+# Debug dashboard raw config — Home Assistant, 2026-11-26
+# Phase 3 build, read back 3:32-3:33 PM EST.
+# URL path is debug-dashboard (/debug-dashboard/0) — "debug" alone was
+# rejected by the URL validator.
+# Saved to the ha-theme repo as the restore point for the Debug dashboard.
+#
+# Notes:
+# - No card carries card-mod (all built fresh in the visual editor); the
+#   Haven theme provides the look.
+# - The Greenhouse Watering template binary sensor
+#   (binary_sensor.greenhouse_watering) was created in Phase 3 but is NOT
+#   on this dashboard yet — it belongs on the Helpers card when added.
+# - The Automations entities card rows show the standard toggles; the
+#   automations themselves remain off (Brain Master last fired Nov 12, the
+#   other three greenhouse automations last fired Apr 21).
+
+views:
+  - type: sections
+    sections:
+      - type: grid
+        cards:
+          - type: heading
+            heading: Batteries
+            heading_style: title
+          - type: entities
+            entities:
+              - entity: sensor.5179_2551_battery
+              - entity: sensor.front_door_battery_2
+              - entity: sensor.robovac_battery
+            title: Batteries
+      - type: grid
+        cards:
+          - type: heading
+            heading: System
+            heading_style: title
+          - type: entities
+            entities:
+              - entity: sensor.system_monitor_processor_use
+              - entity: sensor.system_monitor_memory_usage
+              - entity: sensor.system_monitor_disk_usage
+              - entity: sensor.system_monitor_processor_temperature
+              - entity: sensor.system_monitor_uptime
+              - entity: binary_sensor.raspberry_pi_power_status
+            title: System metrics
+          - show_name: true
+            show_icon: true
+            type: button
+            name: Restart Home Assistant
+            tap_action:
+              action: perform-action
+              perform_action: homeassistant.restart
+              target: {}
+              confirmation:
+                text: Are you sure you want to restart Home Assistant?
+      - type: grid
+        cards:
+          - type: heading
+            heading: Automations
+            heading_style: title
+          - type: entities
+            entities:
+              - entity: automation.front_door_snapshot_update
+                secondary_info: last-triggered
+              - entity: automation.greenhouse_brain
+                secondary_info: last-triggered
+              - entity: automation.greenhouse_fan_predictive
+                secondary_info: last-triggered
+              - entity: automation.greenhouse_frost_heater_control
+                secondary_info: last-triggered
+              - entity: automation.raise_greenhouse_humidity
+                secondary_info: last-triggered
+            title: Automations
+      - type: grid
+        cards:
+          - type: heading
+            heading: Who's Home
+            heading_style: title
+          - type: entities
+            entities:
+              - entity: person.home
+              - entity: device_tracker.garretts_iphone_2
+              - entity: device_tracker.garretts_ipad_air
+              - entity: device_tracker.garrett_s_z_fold8
+              - entity: device_tracker.haleys_iphone
+              - entity: zone.home
+            title: Who's Home
+      - type: grid
+        cards:
+          - type: heading
+            heading: Helpers
+            heading_style: title
+          - type: entities
+            entities:
+              - entity: vacuum.vacuum_homekit
+              - entity: sensor.wifi_thermometer_greenhouse_predicted_temp
+              - entity: timer.greenhouse_fan_purge
+              - entity: timer.greenhouse_manual_water_hold
+              - entity: timer.greenhouse_mist_pulse
+              - entity: timer.greenhouse_morning_water
+              - entity: counter.greenhouse_water_due
+              - entity: sensor.wifi_thermometer_test
+              - entity: light.lamp_socket_1
+              - entity: light.standing_lamp_socket_1
+            title: Helpers
+          - type: entities
+            entities:
+              - entity: timer.greenhouse_fan_purge
+              - entity: timer.greenhouse_manual_water_hold
+              - entity: timer.greenhouse_mist_pulse
+              - entity: timer.greenhouse_morning_water
+              - entity: counter.greenhouse_water_due
+            title: Greenhouse Timers
+    max_columns: 2
+    title: Debug
