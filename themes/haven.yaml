@@ -1,0 +1,147 @@
+# Haven — a dark-first Material 3 Expressive theme for Home Assistant
+# For Garrett. Deep background, lime accent (Portside #0B0B0D / #A3E635).
+# Targets the 2026.5+ frontend (Web Awesome switches, ha-color-* tokens).
+#
+# Lives at themes/haven.yaml — HACS / the Marketplace only accept themes
+# inside a themes/ folder.
+
+Haven:
+  # ── Shared by both modes ───────────────────────────────────────────────
+  ha-card-border-radius: "18px"
+  ha-card-border-width: "1px"   # hairline so cards read on near-black / OLED
+
+  modes:
+    dark:
+      # Accent. HA 2026.x generates the --ha-color-primary-* ramp,
+      # light-primary-color and dark-primary-color from primary-color,
+      # so those are no longer set by hand.
+      primary-color: "#A3E635"
+      accent-color: "#A3E635"
+      # Text/icons drawn ON a primary fill (buttons, chips). Must be dark:
+      # near-white on lime is 1.3:1, dark on lime is 13:1.
+      text-primary-color: "#0B0B0D"
+
+      # Surfaces
+      primary-background-color: "#0B0B0D"
+      secondary-background-color: "#131316"
+      card-background-color: "#16161A"
+      ha-card-border-color: "#24242A"
+      ha-card-box-shadow: "none"    # shadows don't show on #0B0B0D
+      ha-dialog-surface-background: "#1B1B20"
+      mdc-theme-surface: "#1B1B20"    # legacy menus still read this
+
+      # Form fields (otherwise HA's dark default #363636 shows through)
+      ha-color-form-background: "#1E1E24"
+      ha-color-form-background-hover: "#26262C"
+      ha-color-form-background-disabled: "#131316"
+
+      # Text
+      primary-text-color: "#F2F2ED"   # 16:1 on cards
+      secondary-text-color: "#9A9AA3"   # 6.5:1 on cards
+      disabled-text-color: "#5C5C66"
+      divider-color: "#26262C"
+
+      # Sidebar and header
+      sidebar-background-color: "#0B0B0D"
+      sidebar-icon-color: "#9A9AA3"
+      sidebar-text-color: "#F2F2ED"
+      sidebar-selected-icon-color: "#A3E635"
+      sidebar-selected-text-color: "#A3E635"
+      app-header-background-color: "#0B0B0D"
+      app-header-text-color: "#F2F2ED"
+
+      # Switches (2026.5 replaced the old switch-* variables with these)
+      ha-switch-background-color: "#26262C"
+      ha-switch-border-color: "#3A3A42"
+      ha-switch-thumb-background-color: "#9A9AA3"
+      ha-switch-thumb-border-color: "#9A9AA3"
+      ha-switch-checked-background-color: "#A3E635"
+      ha-switch-checked-border-color: "#A3E635"
+      ha-switch-checked-thumb-background-color: "#0B0B0D"
+      ha-switch-checked-thumb-border-color: "#0B0B0D"
+
+      # State colours (what tile cards, badges and history use).
+      # HA ships per-domain defaults (lights/switches amber, covers purple…),
+      # so on = lime has to be set per domain, not only via state-active-color.
+      state-icon-color: "#9A9AA3"
+      state-active-color: "#A3E635"
+      state-inactive-color: "#76767F"   # 4:1, readable as an icon
+      state-unavailable-color: "#F59E0B"
+      state-light-active-color: "#A3E635"
+      state-switch-active-color: "#A3E635"
+      state-input_boolean-active-color: "#A3E635"
+      state-fan-active-color: "#A3E635"
+      state-automation-active-color: "#A3E635"
+      state-timer-active-color: "#A3E635"
+      state-cover-active-color: "#A3E635"
+      state-vacuum-active-color: "#A3E635"
+      state-media_player-active-color: "#A3E635"
+      state-person-home-color: "#A3E635"
+      state-device_tracker-home-color: "#A3E635"
+      # Climate heat/cool deliberately keep HA's orange/blue.
+      # Want an open garage to read as "attention" instead of "on"? Uncomment:
+      # state-cover-garage-open-color: "#F59E0B"
+
+      # If filled buttons (e.g. Save in dialogs) show white text on lime
+      # after install, check the label colour in browser DevTools and set:
+      # ha-color-on-primary-loud: "#0B0B0D"
+
+    light:
+      # Lime-700: #65A30D is only 3.1:1 on white, too low for link and
+      # button text. #4D7C0F is 5:1 on white and 5:1 under white text.
+      primary-color: "#4D7C0F"
+      accent-color: "#4D7C0F"
+      text-primary-color: "#FFFFFF"
+
+      # Surfaces
+      primary-background-color: "#F7F7F5"
+      secondary-background-color: "#EFEFEC"
+      card-background-color: "#FFFFFF"
+      ha-card-border-color: "#E6E6E2"
+      ha-card-box-shadow: "0 2px 8px rgba(0, 0, 0, 0.10)"
+      ha-dialog-surface-background: "#FFFFFF"
+      mdc-theme-surface: "#FFFFFF"
+
+      # Text
+      primary-text-color: "#1A1A1C"
+      secondary-text-color: "#6B6B74"
+      disabled-text-color: "#A8A8B0"
+      divider-color: "#E2E2DE"
+
+      # Sidebar and header
+      sidebar-background-color: "#F7F7F5"
+      sidebar-icon-color: "#6B6B74"
+      sidebar-text-color: "#1A1A1C"
+      sidebar-selected-icon-color: "#4D7C0F"
+      sidebar-selected-text-color: "#4D7C0F"
+      app-header-background-color: "#F7F7F5"
+      app-header-text-color: "#1A1A1C"
+
+      # Switches
+      ha-switch-background-color: "#E4E4E0"
+      ha-switch-border-color: "#C9C9C4"
+      ha-switch-thumb-background-color: "#71717A"
+      ha-switch-thumb-border-color: "#71717A"
+      ha-switch-checked-background-color: "#4D7C0F"
+      ha-switch-checked-border-color: "#4D7C0F"
+      ha-switch-checked-thumb-background-color: "#FFFFFF"
+      ha-switch-checked-thumb-border-color: "#FFFFFF"
+
+      # State colours. Bright lime (#A3E635) is 1.5:1 on white and would
+      # vanish, so light mode uses lime-700.
+      state-icon-color: "#6B6B74"
+      state-active-color: "#4D7C0F"
+      state-inactive-color: "#8A8A93"
+      state-unavailable-color: "#B45309"
+      state-light-active-color: "#4D7C0F"
+      state-switch-active-color: "#4D7C0F"
+      state-input_boolean-active-color: "#4D7C0F"
+      state-fan-active-color: "#4D7C0F"
+      state-automation-active-color: "#4D7C0F"
+      state-timer-active-color: "#4D7C0F"
+      state-cover-active-color: "#4D7C0F"
+      state-vacuum-active-color: "#4D7C0F"
+      state-media_player-active-color: "#4D7C0F"
+      state-person-home-color: "#4D7C0F"
+      state-device_tracker-home-color: "#4D7C0F"
+      # state-cover-garage-open-color: "#B45309"

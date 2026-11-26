@@ -1,16 +1,25 @@
-# Haven — a dark-first Material 3 Expressive theme for Home Assistant
+# Haven — Home Assistant theme
 
-Deep background (`#0B0B0D`), lime accent (`#A3E635`), big rounded cards. Built for
-Garrett's Home Assistant — phone, tablet, and computer.
+A dark-first Material 3 Expressive theme. Deep near-black background
+(`#0B0B0D`), lime accent (`#A3E635`). Requires Home Assistant 2026.5 or
+newer (the switch tokens are the Web Awesome ones).
 
 ## Install
 
-1. In Home Assistant, open **HACS → ⋮ → Custom repositories**.
-2. Add `https://github.com/Garrietta/ha-theme` as a **Theme**.
-3. Install **Haven** from HACS, then pick it in your profile → Theme.
-4. Restart Home Assistant if the theme doesn't appear right away.
+- On Home Assistant 2026.10 or older, use HACS → Custom repositories →
+  add this repository, then install it as a theme.
+- On 2026.11+, use Settings → Marketplace → Add from link (the old HACS
+  installer stops at 2026.11).
 
-## Files
+## After install
 
-- `haven.yaml` — the theme (dark + light modes)
+If "Haven" doesn't appear in the theme picker: Settings → Devices &
+Services → Home Assistant → ⋮ → **Reload themes** (no restart needed).
+"Dark" is the default mode, but each device remembers its own mode, so
+set Dark on each device you use.
+
+## Repository layout
+
+- `themes/haven.yaml` — the theme (HACS only accepts themes in a
+  `themes/` folder)
 - `hacs.json` — HACS metadata
