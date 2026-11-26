@@ -1,0 +1,311 @@
+# Home dashboard raw config — Home Assistant, 2026-11-26
+# Phase 2 rebuild of Material3 into "Home", read back 2:54 PM EST.
+# URL path stays material3 (/dashboard-material3/0).
+# Saved to the ha-theme repo as the restore point for the new Home dashboard.
+#
+# Known deviations from the design spec (see design.md):
+# - Rooms row is Indoor (Ecobee) only: no Bedroom/Living Room temp/humidity
+#   sensors exist anywhere in the system, and the Govee greenhouse sensor is
+#   flaky (live 1:56 PM, unavailable again by 2:16 PM), so greenhouse temp is
+#   omitted. No outdoor temp sensor, so no indoor-vs-outdoor graph.
+# - New cards use the Haven theme's default styling, not the 28px/no-border
+#   card-mod (the browser cannot paste into CodeMirror fields).
+# - Thermostat card name left as "Ecobee Thermostat".
+# - View YAML ends with an empty `cards: []` (harmless leftover).
+
+title: Home
+views:
+  - title: Home
+    type: sections
+    max_columns: 2
+    sections:
+      - type: grid
+        cards:
+          - type: horizontal-stack
+            cards:
+              - type: tile
+                entity: alarm_control_panel.bloomington_mode
+                name: Security
+                hide_state: true
+                card_mod:
+                  style: |
+                    ha-card {
+                      border-radius: 9999px;
+                      border: none;
+                      background: rgba(var(--rgb-primary-color), 0.15); /* Tinted Surface */
+                    }
+              - type: tile
+                entity: cover.smart_garage_door_24090408838301610702c4e7ae0ae280_garage
+                name: Garage
+                hide_state: true
+                card_mod:
+                  style: |
+                    ha-card {
+                      border-radius: 9999px;
+                      border: none;
+                      background: rgba(var(--rgb-accent-color), 0.15); /* Tinted Surface */
+                    }
+      - type: grid
+        cards:
+          - type: heading
+            heading: Header
+            heading_style: title
+          - type: weather-forecast
+            entity: weather.forecast_home
+            forecast_type: daily
+          - type: tile
+            entity: person.home
+            name: Who's Home
+            vertical: false
+            features_position: bottom
+          - type: markdown
+            content: |
+              # {{ now().strftime('%I:%M %p') }}
+              {{ now().strftime('%A, %B %d, %Y') }}
+            title: Time & Date
+      - type: grid
+        cards:
+          - type: heading
+            heading: Rooms
+            heading_style: title
+          - type: tile
+            entity: sensor.thermostat_current_temperature
+            name: Indoor Temperature
+            vertical: false
+            features_position: bottom
+          - type: tile
+            entity: sensor.thermostat_current_humidity
+            name: Indoor Humidity
+            vertical: false
+            features_position: bottom
+      - type: grid
+        cards:
+          - type: heading
+            heading: Climate
+            heading_style: title
+          - type: thermostat
+            entity: climate.thermostat
+      - type: grid
+        cards:
+          - type: heading
+            heading: Lights
+            heading_style: title
+          - type: tile
+            entity: light.standing_lamp_socket_1
+            icon: ""
+            vertical: false
+            features_position: bottom
+            card_mod:
+              style: |
+                ha-card { border-radius: 28px; border: none; }
+          - type: tile
+            entity: light.lamp_socket_1
+            icon: ""
+            vertical: false
+            features_position: bottom
+            card_mod:
+              style: |
+                ha-card { border-radius: 28px; border: none; }
+      - type: grid
+        cards:
+          - type: heading
+            heading: Garage
+            heading_style: title
+          - type: tile
+            entity: cover.smart_garage_door_24090408838301610702c4e7ae0ae280_garage
+            vertical: false
+            tap_action:
+              action: toggle
+            icon_tap_action:
+              action: toggle
+            features_position: bottom
+      - type: grid
+        cards:
+          - type: heading
+            heading: Vacuum
+            heading_style: title
+          - type: tile
+            entity: vacuum.t2292
+            name: eufy AE C10
+            icon: mdi:robot-vacuum
+            features:
+              - type: vacuum-commands
+                commands:
+                  - start_pause
+                  - return_home
+            card_mod:
+              style: |
+                ha-card { border-radius: 28px; border: none; }
+          - type: tile
+            entity: sensor.robovac_battery
+            name: Battery
+            icon: mdi:battery
+            card_mod:
+              style: |
+                ha-card { border-radius: 28px; border: none; }
+      - type: grid
+        cards:
+          - type: heading
+            heading: Cameras
+          - type: picture-entity
+            entity: camera.front_door_snapshot
+            name: Front Door
+            show_state: false
+            show_name: false
+            camera_view: auto
+            fit_mode: cover
+            card_mod:
+              style: |
+                ha-card {
+                  border-radius: 28px;
+                  overflow: hidden;
+                  border: none;
+                }
+          - type: picture-entity
+            entity: camera.tapo_2_live_view
+            name: Garage
+            show_state: false
+            show_name: false
+            camera_view: auto
+            fit_mode: cover
+            card_mod:
+              style: |
+                ha-card {
+                  border-radius: 28px;
+                  overflow: hidden;
+                  border: none;
+                }
+          - type: picture-entity
+            entity: camera.tapo_1_live_view
+            name: Living Room
+            show_state: false
+            show_name: false
+            camera_view: auto
+            fit_mode: cover
+            card_mod:
+              style: |
+                ha-card {
+                  border-radius: 28px;
+                  overflow: hidden;
+                  border: none;
+                }
+      - type: grid
+        cards:
+          - type: heading
+            heading: Greenhouse
+          - type: tile
+            entity: automation.greenhouse_brain
+            name: Master Control
+            icon: mdi:sprout
+            color: green
+            vertical: false
+            tap_action:
+              action: none
+            icon_tap_action:
+              action: none
+            features_position: bottom
+            card_mod:
+              style: |
+                ha-card { border-radius: 28px; border: none; }
+          - type: tile
+            entity: automation.greenhouse_frost_heater_control
+            name: Frost Heater
+            icon: mdi:heating-coil
+            vertical: false
+            tap_action:
+              action: none
+            icon_tap_action:
+              action: none
+            features_position: bottom
+            card_mod:
+              style: |
+                ha-card { border-radius: 28px; border: none; }
+      - type: grid
+        cards:
+          - type: heading
+            heading: Warnings
+            heading_style: title
+          - type: markdown
+            content: "### Thermostat is unavailable"
+            visibility:
+              - condition: state
+                entity: climate.thermostat
+                state: unavailable
+          - type: markdown
+            content: "### Garage door is unavailable"
+            visibility:
+              - condition: state
+                entity: cover.smart_garage_door_24090408838301610702c4e7ae0ae280_garage
+                state: unavailable
+          - type: markdown
+            content: "### Front Door camera is unavailable"
+            visibility:
+              - condition: state
+                entity: camera.front_door_snapshot
+                state: unavailable
+          - type: markdown
+            content: "### Vacuum is unavailable"
+            visibility:
+              - condition: state
+                entity: vacuum.t2292
+                state: unavailable
+          - type: markdown
+            content: "### Front Door doorbell is unavailable"
+            visibility:
+              - condition: state
+                entity: binary_sensor.front_door_ding
+                state: unavailable
+          - type: markdown
+            content: "### Ring doorbell is unavailable"
+            visibility:
+              - condition: state
+                entity: sensor.front_door_battery_2
+                state: unavailable
+          - type: markdown
+            content: "### Garage door left open"
+            visibility:
+              - condition: state
+                entity: cover.smart_garage_door_24090408838301610702c4e7ae0ae280_garage
+                state: open
+          - type: markdown
+            content: "### Vacuum error"
+            visibility:
+              - condition: state
+                entity: vacuum.t2292
+                state: error
+          - type: markdown
+            content: "### Front Door battery low"
+            visibility:
+              - condition: numeric_state
+                entity: sensor.front_door_battery
+                below: 20
+          - type: markdown
+            content: "### Ring doorbell battery low"
+            visibility:
+              - condition: numeric_state
+                entity: sensor.front_door_battery_2
+                below: 20
+          - type: markdown
+            content: "### Greenhouse sensor battery low"
+            visibility:
+              - condition: numeric_state
+                entity: sensor.5179_2551_battery
+                below: 20
+          - type: markdown
+            content: "### Vacuum battery low"
+            visibility:
+              - condition: numeric_state
+                entity: sensor.robovac_battery
+                below: 20
+      - type: grid
+        cards:
+          - type: heading
+            heading: Media
+            heading_style: title
+          - type: media-control
+            entity: media_player.family_room_tv
+            name: Family Room TV
+            visibility:
+              - condition: state
+                state: playing
+    cards: []
